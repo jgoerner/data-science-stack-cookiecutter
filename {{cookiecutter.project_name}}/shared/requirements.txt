@@ -1,0 +1,5 @@
+minio==4.0.0
+numpy==1.12.1
+pandas==0.19.2
+scikit-learn==0.19.1
+scipy==0.19.1

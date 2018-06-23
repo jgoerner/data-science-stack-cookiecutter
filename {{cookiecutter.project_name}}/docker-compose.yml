@@ -1,0 +1,112 @@
+version: "3"
+
+# All available services
+services:
+
+  # Computation
+  jupyter:
+    container_name: "{{cookiecutter.project_name}}_jupyter"
+    restart: "always"
+    build: services/jupyter
+    env_file:
+      - ./config/jupyter.env
+      - ./config/minio.env
+      - ./config/shared_database.env
+    volumes:
+      - ./shared/notebooks/:/home/jovyan/work/notebooks
+      - ./shared/dags/:/home/jovyan/work/dags
+      - ./services/apistar/api/:/home/jovyan/work/api
+    ports:
+      - 8888:8888
+    entrypoint: sh -c 'start-notebook.sh --NotebookApp.token=$$JUPYTER_PASSWORD'
+
+  # Visualization
+  superset:
+    container_name: "{{cookiecutter.project_name}}_superset"
+    restart: "always"
+    image: tylerfowler/superset:0.24
+    depends_on:
+        - postgres
+    env_file:
+        - ./config/superset_container.env
+        - ./config/superset_database.env
+    ports:
+      - 8088:8088
+
+  # Misc Storage
+  postgres:
+    container_name: "{{cookiecutter.project_name}}_postgres"
+    restart: "always"
+    image: postgres
+    env_file:
+      - ./config/postgres.env
+      - ./config/superset_database.env
+      - ./config/airflow_database.env
+      - ./config/shared_database.env
+    volumes:
+      - postgres_volume:/var/lib/postgresql/
+      - ./services/postgres/:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
+
+  # Scheduling
+  airflow:
+    container_name: "{{cookiecutter.project_name}}_airflow"
+    restart: "always"
+    image: puckel/docker-airflow:1.9.0-2
+    depends_on:
+      - postgres
+    env_file:
+      - ./config/airflow_container.env
+      - ./config/minio.env
+      - ./config/shared_database.env
+    volumes:
+      - ./shared/requirements.txt:/requirements.txt
+      - ./shared/dags/:/usr/local/airflow/dags
+    ports:
+      - 8080:8080
+    command: webserver
+
+  # Model Storage
+  minio:
+    container_name: "{{cookiecutter.project_name}}_minio"
+    restart: "always"
+    image: minio/minio
+    env_file:
+        - ./config/minio.env
+    volumes:
+        - minio_volume:/data
+    ports:
+        - 9000:9000
+    command: server /data
+
+  # API
+  apistar:
+    container_name: "{{cookiecutter.project_name}}_apistar"
+    restart: "always"
+    build: services/apistar
+    env_file:
+      - ./config/minio.env
+    volumes:
+      - ./services/apistar/api:/usr/src/app
+    ports:
+      - 8000:8000
+    command: gunicorn app:app -b 0.0.0.0:8000
+
+  # Admin Overview
+  portainer:
+    container_name: "{{cookiecutter.project_name}}_portainer"
+    restart: "always"
+    image: portainer/portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_volume:/data
+    ports:
+      - 9090:9000
+    command: -H unix:///var/run/docker.sock
+
+# Volumes to persist data
+volumes:
+  postgres_volume:
+  minio_volume:
+  portainer_volume:
