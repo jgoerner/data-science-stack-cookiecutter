@@ -1,5 +1,8 @@
-# data-science-stack-cookiecutter
+# Data Science Stack - Cookiecutter
 Cookiecutter to launch an awesome Data Science toolstack in Docker.
+
+# See it in action
+[![asciicast](https://asciinema.org/a/CcZ9duIdP0pBfZWxw5Nt1tFVZ.png)](https://asciinema.org/a/CcZ9duIdP0pBfZWxw5Nt1tFVZ)
 
 # Used Variables
 The following table provides an overview about parameter, that are queried by cookiecutter (and why)
