@@ -1,0 +1,10 @@
+{
+    "project_name": "project_name",
+    "jupyter_password": "changeme1234",
+    "postgres_db_password": "changeme1234",
+    "shared_db_password": "changeme1234",
+    "superset_db_password": "changeme1234",
+    "superset_admin_password": "changeme1234",
+    "minio_access_key": "changeme1234",
+    "minio_secret_key": "changeme1234"
+}
