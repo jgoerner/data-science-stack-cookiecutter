@@ -44,7 +44,7 @@ services:
       - ./config/airflow_database.env
       - ./config/shared_database.env
     volumes:
-      - postgres_volume:/var/lib/postgresql/
+      - postgres_volume:/var/lib/postgresql/data/
       - ./services/postgres/:/docker-entrypoint-initdb.d/
     ports:
       - 5432:5432
