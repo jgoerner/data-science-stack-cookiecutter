@@ -1,4 +1,4 @@
-FROM jupyter/all-spark-notebook
+FROM jupyter/{{cookiecutter.jupyter_image}}
 
 USER root
 
