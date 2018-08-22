@@ -1,5 +1,6 @@
 {
     "project_name": "project_name",
+    "jupyter_image": ["base-notebook", "minimal-notebook", "r-notebook", "scipy-notebook", "tensorflow-notebook", "datascience-notebook", "pyspark-notebook", "all-spark-notebook"],
     "jupyter_password": "changeme1234",
     "postgres_db_password": "changeme1234",
     "shared_db_password": "changeme1234",
