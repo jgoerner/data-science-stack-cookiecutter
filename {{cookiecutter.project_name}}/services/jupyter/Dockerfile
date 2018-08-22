@@ -1,4 +1,4 @@
-FROM jupyter/scipy-notebook
+FROM jupyter/{{cookiecutter.jupyter_image}}
 
 USER root
 
