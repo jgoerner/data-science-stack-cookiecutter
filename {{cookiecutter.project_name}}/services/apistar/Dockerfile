@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir --proxy=${http_proxy}\
   numpy===1.14.3
 
 RUN pip install --no-cache-dir --proxy=${http_proxy}\
-  apistar==0.5.12 \
+  apistar==0.5.41 \
   gunicorn==19.8.1 \
   dill===0.2.7.1 \
   minio===4.0.0 \
