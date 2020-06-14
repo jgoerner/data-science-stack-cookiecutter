@@ -1,4 +1,6 @@
 # Data Science Stack - Cookiecutter
+[![Maintainers Wanted](https://img.shields.io/badge/maintainers-wanted-red.svg)](https://github.com/pickhardt/maintainers-wanted)
+
 Cookiecutter to launch an awesome Data Science toolstack in Docker.
 
 # See it in action
